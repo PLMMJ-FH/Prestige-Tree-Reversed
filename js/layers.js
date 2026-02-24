@@ -127,8 +127,8 @@ addLayer("i", {
 	],
     milestones: {
 		0: {
-			requirementDescription: "4 Ideas",
-			done() { return player.i.best.gte(4) },
+			requirementDescription: "3 Ideas",
+			done() { return player.i.best.gte(3) },
 			effectDescription: "Square revelation gain.",
 		},
     },
