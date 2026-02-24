@@ -18,6 +18,7 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1</h3><br>
+		- Came back to this mod after a ~3 month hiatus.<br>
 		- Made Civilizations work like its TPTR counterpart.<br>
 	<h3>v0.0</h3><br>
 		- Dealt with some of mod.js.<br>
