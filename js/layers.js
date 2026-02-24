@@ -79,6 +79,60 @@ addLayer("c", {
     layerShown(){return true}
 })
 
+addLayer("i", {
+    name: "ideas", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "I", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		best: new Decimal(0),
+		points: new Decimal(0),
+    }},
+    color: "#fad682",
+    requires() { return new Decimal(2500).times((hasAchievement("a", 21)&&!player.i.unlocked)?1e10:1) },
+    resource: "ideas", // Name of prestige currency
+    baseResource: "points", // Name of resource prestige is based on
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    branches: ["c"],
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 1.4, // Prestige currency exponent
+    rev() { 
+        rev = player.c.points.add(1).log(2).add(1).times(player.i.points.add(1))
+        if (hasMilestone("i", 0)) rev = rev.pow(2)
+        return rev
+    },
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        exp = new Decimal(1)
+        return exp
+    },
+	tabFormat: ["main-display",
+		"prestige-button",
+		"resource-display", 
+        "blank", 
+		"milestones", 
+        "blank", 
+        "blank",
+		["display-text", function() { return "Revelations: <h2>"+formatWhole(tmp.i.rev)+"</h2>"+"(based on Ideas & Population)" }],
+		// Add this when revs have an effect ["display-text", function() { return "Effect: Multiply Mech-Energy by <h2>"+format(tmp.id.revEff)+"</h2>." } ], "blank",
+	],
+    milestones: {
+		0: {
+			requirementDescription: "4 Ideas",
+			done() { return player.i.best.gte(4) },
+			effectDescription: "Square revelation gain.",
+		},
+    },
+    row: 1, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "i", description: "I: Perform a row 2 reset for ideas", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){return hasAchievement('a', 13)},
+})
+
 addLayer("a", {
     symbol: "A", // This appears on the layer's node. Default is the id with the first letter capitalized
     startData() { return {
@@ -92,7 +146,7 @@ addLayer("a", {
     },
     achievements: {
         rows: 1,
-        cols: 2,
+        cols: 3,
         11: {
             name: "Existence was a Mistake",
 		    done() { return player.c.points.gte(1) },
@@ -102,6 +156,11 @@ addLayer("a", {
             name: "Getting Bored?",
 		    done() { return player.c.points.gte(5) },
 		    tooltip: "Have a population of at least 5. Reward: You can buy max Population.",
+        },
+        13: {
+            name: "Planning for Success.",
+		    done() { return player.points.gte(2500) },
+		    tooltip: "Reach 2,500 points. Reward: Reveals row 2 layers.",
         },
     },
 	tabFormat: [
