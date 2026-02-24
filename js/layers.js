@@ -34,6 +34,7 @@ addLayer("c", {
         "buyables",
         "blank",
         "upgrades"],
+    canBuyMax() { return hasAchievement("a", 12) },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "c", description: "C: Perform a row 1 reset for population", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -76,4 +77,37 @@ addLayer("c", {
         },
     },
     layerShown(){return true}
+})
+
+addLayer("a", {
+    symbol: "A", // This appears on the layer's node. Default is the id with the first letter capitalized
+    startData() { return {
+        unlocked: true,
+    }},
+    color: "#FFFF00",
+    row: "side", // Row the layer is in on the tree (0 is the first row)
+    layerShown(){return true},
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Achievements")
+    },
+    achievements: {
+        rows: 1,
+        cols: 2,
+        11: {
+            name: "Existence was a Mistake.",
+		    done() { return player.c.points.gte(1) },
+		    tooltip: "Have a population of at least 1.",
+        },
+        12: {
+            name: "Getting Bored?",
+		    done() { return player.c.points.gte(5) },
+		    tooltip: "Have a population of at least 5. Reward: You can buy max Population.",
+        },
+    },
+	tabFormat: [
+		"blank", 
+		["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
+		"blank", "blank",
+		"achievements",
+	],
 })
