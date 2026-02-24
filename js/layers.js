@@ -41,17 +41,18 @@ addLayer("c", {
     upgrades: {
             11: {
             title: "An upgrade? In MY Civilizations?!",
-            description: "Population boosts Civilization 1 effectiveness.",
+            description: "Best population boosts Civilization 1 effectiveness.",
+            cost: new Decimal(3),
             effect() {
-                let eff = player[this.layer].points.add(1).pow(0.5).add(1)
+                let eff = player[this.layer].best.add(1).pow(0.5).add(1)
                 return eff
             },
-            cost: new Decimal(3),
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
     },
     buyables: {
-    	rows: 2,
-		cols: 3,
+    	rows: 1,
+		cols: 1,
         11: {
             title: "Civilization 1",
             unlocked() { return player[this.layer].unlocked }, 
