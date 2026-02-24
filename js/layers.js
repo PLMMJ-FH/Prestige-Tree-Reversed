@@ -5,6 +5,7 @@ addLayer("c", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
+        best: new Decimal(0),
     }},
     color: "#edb3ff",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -27,7 +28,7 @@ addLayer("c", {
 				{}],
 		"blank",
 		["display-text",
-			function() {return 'Your best buyabucks is ' + formatWhole(player.b.best) + '.<br>You have made a total of '+formatWhole(player.b.total)+" buyabucks."},
+			function() {return 'Your best population is ' + formatWhole(player.c.best) + '.'},
 				{}],
 		"blank",
         "buyables",],
