@@ -12,14 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Back from hiatus",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1</h3><br>
+		- Made Civilizations work like its TPTR counterpart.<br>
 	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+		- Dealt with some of mod.js.<br>
+		- Added cosmetic changes.`
 
 let winText = `Congratulations on reaching the current endgame! This mod will grow as my understanding of the code does.`
 
