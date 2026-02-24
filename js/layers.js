@@ -116,7 +116,7 @@ addLayer("i", {
 		"milestones", 
         "blank", 
         "blank",
-		["display-text", function() { return "Revelations: <h2>"+formatWhole(tmp.i.rev)+"</h2>"+"(based on Ideas & Population)" }],
+		["display-text", function() { return "Revelations: <h2>"+formatWhole(tmp.i.rev)+"</h2>"+" (based on Ideas & Population)" }],
 		// Add this when revs have an effect ["display-text", function() { return "Effect: Multiply Mech-Energy by <h2>"+format(tmp.id.revEff)+"</h2>." } ], "blank",
 	],
     milestones: {
@@ -158,7 +158,7 @@ addLayer("a", {
 		    tooltip: "Have a population of at least 5. Reward: You can buy max Population.",
         },
         13: {
-            name: "Planning for Success.",
+            name: "Planning for Success",
 		    done() { return player.points.gte(2500) },
 		    tooltip: "Reach 2,500 points. Reward: Reveals row 2 layers.",
         },
