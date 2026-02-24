@@ -49,7 +49,7 @@ addLayer("c", {
             },
             effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
                 let eff = new Decimal(1)
-                eff = eff.times(x)
+                eff = eff.add(x).mult(x.mult(0.5))
                 return eff
             },
             display() { return 'Multiplies point gain.<br>Currently: ' +  format(buyableEffect(this.layer, this.id)) + 'x<br>Cost: ' + formatWhole(this.cost()) + ' population<br>Level: ' + formatWhole(player[this.layer].buyables[this.id])},

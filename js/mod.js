@@ -45,6 +45,9 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+
+	if (player.c.buyables[11].gte(1)) gain = gain.mult(buyableEffect("c", 11));
+	
 	return gain
 }
 
