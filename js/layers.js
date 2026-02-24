@@ -16,6 +16,7 @@ addLayer("c", {
     exponent: 1.1, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (player.i.unlocked) mult = mult.div(tmp.i.revEff);
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -101,6 +102,10 @@ addLayer("i", {
         if (hasMilestone("i", 0)) rev = rev.pow(2)
         return rev
     },
+    revEff() { 
+        revEff = tmp.i.rev.log(10).add(1)
+        return revEff
+    },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -117,7 +122,8 @@ addLayer("i", {
         "blank", 
         "blank",
 		["display-text", function() { return "Revelations: <h2>"+formatWhole(tmp.i.rev)+"</h2>"+" (based on Ideas & Population)" }],
-		// Add this when revs have an effect ["display-text", function() { return "Effect: Multiply Mech-Energy by <h2>"+format(tmp.id.revEff)+"</h2>." } ], "blank",
+		["display-text", function() { return "Effect: Divide population cost by <h2>"+format(tmp.i.revEff)+"</h2>." } ], 
+        "blank",
 	],
     milestones: {
 		0: {
