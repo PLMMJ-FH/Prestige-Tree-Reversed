@@ -31,11 +31,24 @@ addLayer("c", {
 			function() {return 'Your best population is ' + formatWhole(player.c.best) + '.'},
 				{}],
 		"blank",
-        "buyables",],
+        "buyables",
+        "blank",
+        "upgrades"],
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "c", description: "C: Perform a row 1 reset for population", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+    upgrades: {
+            11: {
+            title: "An upgrade? In MY Civilizations?!",
+            description: "Population boosts Civilization 1 effectiveness.",
+            effect() {
+                let eff = player[this.layer].points.add(1).pow(0.5).add(1)
+                return eff
+            },
+            cost: new Decimal(3),
+        },
+    },
     buyables: {
     	rows: 2,
 		cols: 3,
@@ -50,6 +63,7 @@ addLayer("c", {
             effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
                 let eff = new Decimal(1)
                 eff = eff.add(x).add(1).times(x.times(0.5))
+                if (hasUpgrade('c', 11)) eff = eff.times(upgradeEffect('c', 11))
                 return eff
             },
             display() { return 'Multiplies point gain.<br>Currently: ' +  format(buyableEffect(this.layer, this.id)) + 'x<br>Cost: ' + formatWhole(this.cost()) + ' population<br>Level: ' + formatWhole(player[this.layer].buyables[this.id])},
