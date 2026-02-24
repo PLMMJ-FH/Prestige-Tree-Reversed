@@ -43,7 +43,7 @@ addLayer("c", {
     upgrades: {
         11: {
             title: "An upgrade? In MY Civilizations?!",
-            description: "Best population boosts Civilization I effectiveness.",
+            description: "Best population boosts Civilization 1 effectiveness.",
             cost: new Decimal(3),
             effect() {
                 let eff = player[this.layer].best.add(1).pow(0.5).add(1)
@@ -51,29 +51,12 @@ addLayer("c", {
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
-        31: {
-            title: "A World of Thinkers",
-            description: "Unlock a new Civilization.",
-            cost: new Decimal(12),
-            unlocked() { return hasMilestone('i', 0) },
-        },
-        32: {
-            title: "Public Surveys",
-            description: "Best population boosts Civilization III effectiveness.",
-            cost: new Decimal(12),
-            effect() {
-                let eff = player[this.layer].best.add(1).pow(0.33).add(1)
-                return eff
-            },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            unlocked() { return hasUpgrade('c', 31) },
-        },
     },
     buyables: {
     	rows: 1,
-		cols: 3,
+		cols: 1,
         11: {
-            title: "Civilization I",
+            title: "Civilization 1",
             unlocked() { return player[this.layer].unlocked }, 
             cost(x=player[this.layer].buyables[this.id]) { 
                 let base = new Decimal(1)
@@ -84,27 +67,6 @@ addLayer("c", {
                 let eff = new Decimal(1)
                 eff = eff.add(x).add(1).times(x.times(0.5))
                 if (hasUpgrade('c', 11)) eff = eff.times(upgradeEffect('c', 11))
-                return eff
-            },
-            display() { return 'Multiplies point gain.<br>Currently: ' +  format(buyableEffect(this.layer, this.id)) + 'x<br>Cost: ' + formatWhole(this.cost()) + ' population<br>Level: ' + formatWhole(player[this.layer].buyables[this.id])},
-            canAfford() { return player[this.layer].points.gte(this.cost()) },
-            buy() {
-                player[this.layer].points = player[this.layer].points.sub(this.cost())
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-            },
-        },
-        13: {
-            title: "Civilization III",
-            unlocked() { return hasUpgrade('c', 31) }, 
-            cost(x=player[this.layer].buyables[this.id]) { 
-                let base = new Decimal(1)
-                base = base.add(x).mult(x)
-                return base
-            },
-            effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
-                let eff = new Decimal(1)
-                eff = eff.add(x).add(1).times(x.times(0.5)).add(1)
-                if (hasUpgrade('c', 22)) eff = eff.times(upgradeEffect('c', 32))
                 return eff
             },
             display() { return 'Multiplies point gain.<br>Currently: ' +  format(buyableEffect(this.layer, this.id)) + 'x<br>Cost: ' + formatWhole(this.cost()) + ' population<br>Level: ' + formatWhole(player[this.layer].buyables[this.id])},
@@ -146,7 +108,6 @@ addLayer("i", {
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (player.c.buyables[13].gte(1)) mult = mult.div(buyableEffect('c', 13));
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -168,7 +129,7 @@ addLayer("i", {
 		0: {
 			requirementDescription: "3 Ideas",
 			done() { return player.i.best.gte(3) },
-			effectDescription: "Square revelation gain and unlock new Civilization upgrades.",
+			effectDescription: "Square revelation gain.",
 		},
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
