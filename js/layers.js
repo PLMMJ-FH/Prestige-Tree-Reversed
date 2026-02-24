@@ -94,7 +94,7 @@ addLayer("a", {
         rows: 1,
         cols: 2,
         11: {
-            name: "Existence was a Mistake.",
+            name: "Existence was a Mistake",
 		    done() { return player.c.points.gte(1) },
 		    tooltip: "Have a population of at least 1.",
         },
